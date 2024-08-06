@@ -1,0 +1,108 @@
+.upload_file_item {
+  padding: 1.142rem 1.714rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  gap: 0 2.714rem;
+  @media (max-width: 991px) {
+    gap: 0 0.857rem;
+  }
+  &:hover {
+    &::after {
+      position: absolute;
+      content: '';
+      left: 0;
+      background: var(--hover-upload);
+      width: calc(100%);
+      height: 100%;
+      z-index: 1;
+    }
+  }
+  &.minify {
+    .left {
+      .icon {
+        display: none;
+      }
+    }
+  }
+  .left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0 1.142rem;
+    position: relative;
+    z-index: 2;
+    @media (max-width: 991px) {
+      gap: 0 0.571rem;
+    }
+    .icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.571rem 0;
+      .progress_bar {
+        height: 4px;
+        background: var(--neutral-n2);
+        border-radius: 1px;
+        position: relative;
+        .percent {
+          position: absolute;
+          left: 0;
+          height: 100%;
+          border-radius: 1px;
+          background: var(--primary);
+        }
+      }
+      .progress_text {
+        display: flex;
+        align-items: center;
+        gap: 0 0.857rem;
+        > div {
+          &:first-child {
+            display: flex;
+            align-items: center;
+            gap: 0 0.571rem;
+            span {
+              display: inline-block;
+              width: 4px;
+              height: 4px;
+              border-radius: 50%;
+              background: var(--neutral-n7);
+            }
+          }
+        }
+      }
+    }
+  }
+  .right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0 0.857rem;
+    .icon {
+      cursor: pointer;
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+    .close {
+      &:hover {
+        svg {
+          path {
+            fill: var(--primary);
+          }
+        }
+      }
+    }
+  }
+}

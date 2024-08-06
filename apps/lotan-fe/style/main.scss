@@ -1,0 +1,111 @@
+@import '~bootstrap/scss/bootstrap';
+
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Light.ttf')
+    format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Regular.ttf')
+    format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Medium.ttf')
+    format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-SemiBold.ttf')
+    format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Maragsa';
+  src: url('/fonts/Maragsa.otf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  font-size: 14px;
+}
+
+html {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-font-smoothing: antialiased !important;
+  -o-font-smoothing: antialiased !important;
+  -ms-font-smoothing: antialiased !important;
+  scroll-behavior: smooth;
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgba(113, 152, 184, 0.2);
+    opacity: 0.6;
+    border-radius: 2.5rem;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(113, 152, 184, 0.2);
+    border-radius: 2.5rem;
+  }
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(64, 169, 255, 0.3);
+  }
+}
+
+body {
+  font-family: 'SpaceGrotesk', sans-serif;
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span {
+  margin: 0;
+}
+p {
+  white-space: break-spaces;
+}
+a {
+  text-decoration: none;
+}
+
+.Toastify__toast  {
+  background: var(--body-bg) !important;
+  border: 1px solid var(--neutral-n2);
+}
+
+.Toastify__toast-body {
+  border-radius: 6px;
+  padding: 1.14rem 0 1.14rem 1.714rem;
+  font-size: 1rem;
+  font-family: 'SpaceGrotesk';
+  color: var(--neutral-n9);
+}

@@ -1,0 +1,24 @@
+.custom_modal {
+  :global {
+    .modal-content {
+      border: 1px solid var(--neutral-n2);
+      border-radius: 4px;
+      .modal-header {
+        justify-content: space-between;
+        background: var(--header-bg);
+        padding: 1.714rem;
+        border-bottom: 1px solid var(--neutral-n2);
+        .close_btn {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  &.big_modal {
+    max-width: 53rem;
+    @media (max-width: 767px) {
+      margin-left: 1.142rem;
+      margin-right: 1.142rem;
+    }
+  }
+}

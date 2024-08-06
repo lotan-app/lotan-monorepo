@@ -1,0 +1,31 @@
+.upload_minify {
+  position: fixed;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  width: 30.71rem;
+  @media (max-width: 991px) {
+    bottom: 3.2rem;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: 1px solid var(--neutral-n2);
+    background: var(--header-bg);
+    padding: 1.142rem 1.714rem 1.142rem 1.142rem;
+    .icon {
+      cursor: pointer;
+    }
+  }
+  .list_upload {
+    padding: 0.857rem 0;
+    background: var(--body-bg);
+    max-height: 27rem;
+    overflow-y: auto;
+    .empty {
+      text-align: center;
+    }
+  }
+}

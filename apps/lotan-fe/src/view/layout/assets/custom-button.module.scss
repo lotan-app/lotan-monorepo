@@ -1,0 +1,22 @@
+.custom_button {
+  background: var(--primary);
+  border-radius: 4px;
+  text-align: center;
+  border: none;
+  font-family: 'SpaceGrotesk', sans-serif;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  gap: 0 0.571rem;
+  min-height: 32px;
+  padding: 0px 16px;
+  cursor: pointer;
+  &.custom_width {
+    width: inherit;
+  }
+  &.custom_height {
+    height: inherit;
+  }
+}

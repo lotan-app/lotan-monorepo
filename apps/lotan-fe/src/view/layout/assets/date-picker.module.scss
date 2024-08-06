@@ -1,0 +1,105 @@
+.date_picker {
+  :global {
+    .react-datepicker__input-container {
+      input {
+        border: none;
+        outline: none;
+        font-size: 1rem;
+      }
+    }
+    .react-datepicker-wrapper {
+      width: 100%;
+      input {
+        width: 100%;
+        padding: 0;
+        color: var(--neutral-n6);
+      }
+    }
+    .react-datepicker-popper {
+      z-index: 999;
+      .react-datepicker {
+        font-size: 1rem;
+        color: inherit;
+        font-family: 'SpaceGrotesk', sans-serif;
+        border-color: var(--neutral-n3);
+        background-color: var(--body-bg);
+        &__triangle {
+          display: none;
+        }
+        &__header {
+          padding-top: 0;
+          background: none;
+          border: none;
+          .custom_monthyear {
+            padding: 0.428rem 0.857rem;
+            display: grid;
+            align-items: center;
+            justify-content: space-between;
+            grid: 1fr/1.14rem 1fr 1.14rem;
+            gap: 0 1rem;
+            border-bottom: 1px solid var(--neutral-n2);
+            button {
+              border: none;
+              background: none;
+              border-radius: 2px;
+              width: 1.14rem;
+              height: 1.14rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0;
+              transition: all cubic-bezier(0.445, 0.05, 0.55, 0.95) 0.2s;
+              &.prev-tab {
+                svg {
+                  transform: rotate(180deg);
+                }
+              }
+
+            }
+            .select_monthyear {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              select {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                text-overflow: '';
+                border: none;
+                background-color: none;
+                outline: none;
+                text-align: center;
+                background: var(--body-bg);
+                color: var(--neutral-n6);
+                width: 50px;
+                &::-webkit-scrollbar {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+        &__day-name {
+          color: var(--neutral-n6);
+          width: 3rem;
+        }
+        &__day {
+          color: var(--neutral-n6);
+          width: 3rem;
+          &:hover {
+            background: var(--hover-nav);
+          }
+        }
+        &__day--disabled {
+          opacity: 0.5;
+        }
+        &__day--keyboard-selected, &__day--selected {
+          background-color: var(--primary);
+          color: var(--white);
+          &:hover {
+            color: var(--primary);
+          }
+        }
+      }
+    }
+  }
+}

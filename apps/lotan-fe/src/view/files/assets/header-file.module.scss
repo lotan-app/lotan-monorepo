@@ -1,0 +1,33 @@
+.header_file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px 4px 0px 0px;
+  border-bottom: 1px solid var(--neutral-n2);
+  background: var(--header-bg);
+  padding: 1.714rem;
+  height: 6.21rem;
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+    height: unset;
+    gap: 0.857rem 0;
+  }
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 0 0.857rem;
+    .icon {
+      cursor: pointer;
+    }
+  }
+  .right {
+    button {
+      line-height: 20px;
+      .icon {
+        height: 16px;
+        display: flex;
+      }
+    }
+  }
+}

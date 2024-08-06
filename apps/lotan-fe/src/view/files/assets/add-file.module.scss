@@ -1,0 +1,24 @@
+.add_file {
+  padding: 1.714rem 0;
+  text-align: center;
+  width: fit-content;
+  margin: auto;
+  .dropzone {
+    cursor: pointer;
+  }
+  .title {
+    margin-top: 0.714rem;
+    margin-bottom: 0.571rem;
+  }
+  svg {
+    > g {
+      > g {
+        > g {
+          path {
+            fill: transparent;
+          }
+        }
+      }
+    }
+  }
+}

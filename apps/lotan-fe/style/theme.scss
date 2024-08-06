@@ -1,0 +1,55 @@
+@use 'colors' as *;
+
+html[data-theme="dark"] {
+  --bg-main: #{$dark};
+  --body-bg: #{$eerie-black};
+  --hover-button: #{$purple-1};
+  --icon-color: #{$purple-2};
+  --header-bg: #{$eerie-black-1};
+  --primary: #{$purple};
+  --white: #{$white};
+  --bg-tag: #{$rgb-purple};
+  --hover-nav: #{$rgb-purple-1};
+  --hover-upload: #{$rgb_dark};
+  --border-more: #{$dark-3};
+  --btn-bg: #{$gray-6};
+  --btn-border: #{$transparent};
+  --btn-color: #{$white-1};
+  --primary-btn-color: #{$white-1};
+  --neutral-n2: #{$dark-3};
+  --neutral-n3: #{$dark-2};
+  --neutral-n5: #{$gray-5};
+  --neutral-n6: #{$gray-4};
+  --neutral-n7: #{$gray-1};
+  --neutral-n8: #{$white-2};
+  --neutral-n9: #{$gray-2};
+  --neutral-n10: #{$white-1};
+  --dust-red: #{$red};
+}
+
+html[data-theme="light"] {
+  --bg-main: #{$anti-flash-white};
+  --body-bg: #{$white};
+  --hover-button: #{$purple-1};
+  --icon-color: #{$purple-2};
+  --header-bg: #{$white-3};
+  --primary: #{$purple};
+  --white: #{$white};
+  --bg-tag: #{$rgb-purple};
+  --hover-nav: #{$white-4};
+  --hover-upload: #{$rgb-purple-2};
+  --border-more: #{$rgb_gray};
+  --btn-bg: #{$rgb-purple-3};
+  --btn-border: #{$rgb-purple-3};
+  --btn-color: #{$purple};
+  --primary-btn-color: #{$white-1};
+  --neutral-n2: #{$gray-2};
+  --neutral-n3: #{$white-2};
+  --neutral-n5: #{$gray-4};
+  --neutral-n6: #{$gray-5};
+  --neutral-n7: #{$gray};
+  --neutral-n8: #{$dark-2};
+  --neutral-n9: #{$dark-4};
+  --neutral-n10: #{$dark-1};
+  --dust-red: #{$red};
+}

@@ -1,0 +1,25 @@
+.content {
+  padding: 1.714rem;
+  text-align: center;
+  background: var(--body-bg);
+  .btn_group {
+    margin-top: 1.142rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0 0.857rem;
+    button {
+      height: 36px;
+      padding: 0 20px;
+      &.confirm {
+        background: transparent;
+        color: var(--neutral-n9);
+        border: 1px solid var(--neutral-n5);
+      }
+      &.cancel {
+        color: var(--primary-btn-color);
+        border: 1px solid transparent;
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.main {
+  background: var(--body-bg);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid var(--icon-color);
+  cursor: pointer;
+  flex: 0 0 auto;
+  &.normal {
+    width: 1.142rem;
+    height: 1.142rem;
+    img {
+      width: 60%;
+    }
+  }
+  &.medium {
+    width: 1.5rem;
+    height: 1.5rem;
+    img {
+      width: 40%;
+    }
+  }
+  &.big {
+    width: 2.5rem;
+    height: 2.5rem;
+    img {
+      width: 38%;
+    }
+  }
+  &.useBorder {
+    border: 1.5px solid var(--icon-color);
+    &.checked {
+      border-color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+  }
+  &.checked {
+    background: var(--primary);
+  }
+}

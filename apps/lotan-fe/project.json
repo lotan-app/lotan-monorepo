@@ -1,0 +1,20 @@
+{
+  "name": "lotan-fe",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/lotan-fe",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project lotan-fe --web",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/lotan-fe/**/*.{ts,tsx,js,jsx}",
+          "apps/lotan-fe/package.json"
+        ]
+      }
+    }
+  }
+}

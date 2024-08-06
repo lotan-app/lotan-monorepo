@@ -1,0 +1,16 @@
+.file_style {
+  max-width: 75%;
+  margin: 1.714rem auto;
+  @media (max-width: 991px) {
+    max-width: 90%;
+  }
+  @media (max-width: 767px) {
+    max-width: 100%;
+    padding-left: 1.142rem;
+    padding-right: 1.142rem;
+  }
+  .body {
+    background: var(--body-bg);
+    border-radius: 0 0 4px 4px;
+  }
+}

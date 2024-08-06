@@ -1,0 +1,14 @@
+.upload_file {
+  padding: 1.714rem 0 0.571rem 0;
+  .title {
+    padding: 0 1.714rem;
+  }
+  .list_upload {
+    max-height: 400px;
+    overflow-y: auto;
+    .empty {
+      text-align: center;
+      padding: 1.142rem 0;
+    }
+  }
+}

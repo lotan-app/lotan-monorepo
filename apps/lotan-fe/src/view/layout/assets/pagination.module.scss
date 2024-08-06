@@ -1,0 +1,26 @@
+.main {
+  .list_pagination {
+    display: flex;
+    align-items: center;
+    gap: 0 1.142rem;
+    .btn_group {
+      display: flex;
+      align-items: center;
+      gap: 0 0.571rem;
+      .btn_secondary_custom {
+        background: transparent;
+        border: none;
+        padding: 0;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &.prev {
+          svg {
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+  }
+}

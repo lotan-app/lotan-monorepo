@@ -1,0 +1,32 @@
+.master_style {
+  .ms_container {
+    margin-left: 20vw;
+    margin-left: 20dvw;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg-main);
+    display: grid;
+    place-items: center;
+    @media (max-width: 1440px) {
+      margin-left: 23vw;
+      margin-left: 23dvw;
+    }
+    @media (max-width: 991px) {
+      margin-left: 0;
+      min-height: calc(100vh - 5rem);
+      padding-bottom: 3.3rem;
+    }
+    > div {
+      width: 100%;
+    }
+  }
+  &.landing {
+    .ms_container {
+      margin-left: 0;
+      place-items: unset;
+      @media (max-width: 991px) {
+        min-height: 100vh;
+      }
+    }
+  }
+}
