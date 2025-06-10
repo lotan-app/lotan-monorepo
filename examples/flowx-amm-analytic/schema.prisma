@@ -1,0 +1,9 @@
+model Chart {
+  id       String  @id
+  interval String
+  pair     String
+  time     BigInt
+  close    Decimal
+  low      Decimal
+  high     Decimal
+}

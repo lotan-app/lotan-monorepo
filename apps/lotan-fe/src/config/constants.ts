@@ -1,11 +1,4 @@
-import {
-  IC_ACCESS_CONTROL,
-  IC_ANALYTICS,
-  IC_API_KEY,
-  IC_FILES,
-  IC_GATEWAY,
-  IC_MORE_NAV,
-} from '@App/common/icons';
+import { IC_ACCESS_CONTROL, IC_ANALYTICS, IC_API_KEY, IC_FILES, IC_GATEWAY, IC_MORE_NAV } from '@App/common/icons';
 
 export const NAV_LIST = [
   {
@@ -109,6 +102,9 @@ export enum VIEW_FILE {
   UPLOAD = 'upload',
   MANAGE = 'manage',
 }
+
+export const publisherUrl = 'https://publisher.walrus-testnet.walrus.space/v1/blobs?epochs=1';
+export const aggregatorUrl = 'https://aggregator.walrus-testnet.walrus.space/v1/blobs';
 
 export const WALRUS_URL = process.env.NEXT_PUBLIC_WALRUS_URL;
 

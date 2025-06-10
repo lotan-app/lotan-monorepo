@@ -1,0 +1,9 @@
+
+[workspace]
+resolver = '2'
+members = [
+	'packages/sui-checkpoint-reader',
+]
+
+[profile.release]
+lto = true

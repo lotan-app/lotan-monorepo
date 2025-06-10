@@ -1,0 +1,46 @@
+
+[package]
+name = 'sui-checkpoint-reader'
+version = '0.1.0'
+edition = '2021'
+
+[dependencies]
+napi = { version = '2.10.2', default-features = false, features = ["napi6", "async", "serde-json"] }
+napi-derive = '2.9.3'
+async-trait = "0.1.83"
+tokio = "1.38.1"
+reqwest = { version = "0.12", default_features = false, features = [
+    "http2",
+    "json",
+    "rustls-tls",
+] }
+serde = "1.0.210"
+serde_json = { version = "1.0.95", features = ["preserve_order"] }
+backoff = { version = "0.4.0", features = [
+  "futures",
+  "futures-core",
+  "pin-project-lite",
+  "tokio",
+  "tokio_1",
+] }
+tracing = "0.1.37"
+anyhow = "1.0.71"
+futures = "0.3.28"
+serde_with = "3.8"
+schemars = { version = "0.8.21", features = ["either"] }
+lru = { version = "0.10.1" }
+bcs = "0.1.4"
+sui_types = { git = "https://github.com/mystenlabs/sui", package = "sui-types", tag = "mainnet-v1.34.2"}
+sui_json_rpc_types = { git = "https://github.com/mystenlabs/sui", package = "sui-json-rpc-types", tag = "mainnet-v1.34.2"}
+sui_json_rpc = { git = "https://github.com/mystenlabs/sui", package = "sui-json-rpc", tag = "mainnet-v1.34.2"}
+sui_storage = { git = "https://github.com/mystenlabs/sui", package = "sui-storage", tag = "mainnet-v1.34.2"}
+sui_package_resolver = { git = "https://github.com/mystenlabs/sui", package = "sui-package-resolver", tag = "mainnet-v1.34.2"}
+move_core_types = { git = "https://github.com/mystenlabs/sui", package = "move-core-types", tag = "mainnet-v1.34.2"}
+
+[lib]
+crate-type = [
+	'cdylib',
+]
+
+[build-dependencies]
+napi-build = '2.0.1'

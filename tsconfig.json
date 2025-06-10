@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/sui-checkpoint-reader"
+    },
+    {
+      "path": "./apps/graph-agent"
+    },
+    {
+      "path": "./apps/graph-edge"
+    },
+    {
+      "path": "./apps/graph-be"
+    },
+    {
+      "path": "./apps/lotan-fe"
+    },
+    {
+      "path": "./packages/cli"
+    },
+    {
+      "path": "./packages/sdk"
+    }
+  ]
+}

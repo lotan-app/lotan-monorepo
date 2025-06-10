@@ -1,0 +1,31 @@
+{
+  "name": "@lotan/cli",
+  "version": "0.0.1",
+  "dependencies": {
+    "@oclif/core": "^4.1.0",
+    "tslib": "^2.3.0",
+    "rollup": "^4.14.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@lotan/sdk": "0.0.1"
+  },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "bin": {
+    "lotan": "./bin/run.js"
+  },
+  "oclif": {
+    "bin": "lotan",
+    "commands": "./dist/commands",
+    "dirname": "lotan",
+    "topicSeparator": " "
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "ts-node": "^10.9.2"
+  }
+}

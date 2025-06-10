@@ -1,0 +1,6 @@
+export enum EdgeDeployState {
+  PENDING = 'PENDING',
+  DEPLOYING = 'DEPLOYING',
+  DEPLOYED = 'DEPLOYED',
+  DEPLOY_FAILURE = 'DEPLOY_FAILURE',
+}

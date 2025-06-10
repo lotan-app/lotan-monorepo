@@ -3,7 +3,7 @@
 # compiled output
 dist
 tmp
-/out-tsc
+out-tsc
 
 # dependencies
 node_modules
@@ -39,12 +39,19 @@ testem.log
 Thumbs.db
 
 .nx/cache
+.nx/workspace-data
+
+test-output
+
+mappings
+prisma
+*.zip
+*.env
+*.node
+
+target
 
 # Next.js
 .next
 out
-.env
 
-storybook-static
-.env
-.vercel

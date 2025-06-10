@@ -1,14 +1,7 @@
-import {
-  ApolloClient,
-  ApolloLink,
-  InMemoryCache,
-  NormalizedCacheObject,
-  Observable,
-  from,
-} from "@apollo/client";
-import { BatchHttpLink } from "@apollo/client/link/batch-http";
-import { onError } from "@apollo/client/link/error";
-import { getRefreshToken } from "@App/services/auth/authService";
+import { ApolloClient, ApolloLink, InMemoryCache, NormalizedCacheObject, Observable, from } from '@apollo/client';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
+import { onError } from '@apollo/client/link/error';
+import { getRefreshToken } from '@App/services/auth/authService';
 // const httpLink: any = createUploadLink({
 //   uri: process.env.NEXT_PUBLIC_GRAPHQL_URL,
 // });
@@ -25,10 +18,10 @@ const authLink = new ApolloLink((operation, forward) => {
   const requiredAuth = context?.requiredAuth;
   const account = context?.account;
   const auth = localStorage.getItem(`auth-${account}`);
-  const token = auth ? `Bearer ${JSON.parse(auth).accessToken}` : "";
+  const token = auth ? `Bearer ${JSON.parse(auth).accessToken}` : '';
   operation.setContext({
     headers: {
-      Authorization: requiredAuth ? token : "",
+      Authorization: requiredAuth ? token : '',
     },
   });
 
@@ -39,18 +32,18 @@ const link = onError(({ networkError, operation, forward }) => {
     const context = operation.getContext();
     const account = context?.account;
     const auth = localStorage.getItem(`auth-${account}`);
-    const refresh = auth ? JSON.parse(auth).refreshToken : "";
-    if (!refresh) return;
-    return new Observable((observer) => {
+    const refresh = auth ? JSON.parse(auth).refreshToken : '';
+    if (!refresh) return null;
+    return new Observable(observer => {
       getRefreshToken(refresh)
-        .then((response) => {
+        .then(response => {
           const { accessToken, refreshToken } = response.data.refreshToken;
           localStorage.setItem(
             `auth-${account}`,
             JSON.stringify({
               accessToken,
               refreshToken,
-            })
+            }),
           );
           operation.setContext({
             headers: {
@@ -59,7 +52,7 @@ const link = onError(({ networkError, operation, forward }) => {
           });
           forward(operation).subscribe(observer);
         })
-        .catch((error) => {
+        .catch(error => {
           observer.error(error);
         });
     });

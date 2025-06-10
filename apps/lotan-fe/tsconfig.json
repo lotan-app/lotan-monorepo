@@ -2,66 +2,60 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "allowJs": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "strictNullChecks": false,
-    "strictPropertyInitialization": false,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
+    "emitDeclarationOnly": false,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "types": [
-      "jest",
-      "node"
-    ],
-    "baseUrl": "./src",
     "paths": {
-      "@Style/*": [
-        "../style/*"
-      ],
-      "@App/*": [
-        "*"
-      ],
-      "@Services/*": [
-        "services/*"
-      ],
-      "@View/*": [
-        "view/*"
-      ],
-      "@Common/*": [
-        "common/*"
-      ],
-      "@Pages/*": [
-        "pages/*"
-      ],
-      "@Assets/*": [
-        "assets/*"
-      ],
-      "@Config/*": [
-        "config/*"
-      ],
-
-    }
+      "@Style/*": ["./style/*"],
+      "@App/*": ["./src/*"],
+      "@Services/*": ["./src/services/*"],
+      "@View/*": ["./src/view/*"],
+      "@Common/*": ["./src/common/*"],
+      "@Pages/*": ["./src/pages/*"],
+      "@Assert/*": ["./src/assert/*"],
+      "@Config/*": ["./src/config/*"]
+    },
+    "outDir": "out-tsc/lotan-fe",
+    "rootDir": "src",
+    "tsBuildInfoFile": "out-tsc/lotan-fe/tsconfig.tsbuildinfo"
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "src/**/*.js",
+    "src/**/*.json",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
+    "out-tsc",
+    "dist",
     "node_modules",
     "jest.config.ts",
-    "**/*.spec.ts",
-    "**/*.test.ts"
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts",
+    ".next",
+    "eslint.config.js",
+    "eslint.config.cjs",
+    "eslint.config.mjs"
+  ],
+  "references": [
+    {
+      "path": "../../packages/sdk"
+    }
   ]
 }

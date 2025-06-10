@@ -1,9 +1,9 @@
-import React, { FC } from "react";
-import styles from "@View/layout/assets/date-picker.module.scss";
-import "react-datepicker/dist/react-datepicker.css";
-import DatePicker from "react-datepicker";
-import { IC_CARRET_RIGHT } from "@App/common/icons";
-import { range } from "lodash";
+import React, { FC } from 'react';
+import styles from '@View/layout/assets/date-picker.module.scss';
+import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
+import { IC_CARRET_RIGHT } from '@App/common/icons';
+import { range } from 'lodash';
 
 interface IDatePickerProps {
   pickedTime: number;
@@ -14,27 +14,21 @@ interface IDatePickerProps {
 }
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
-const DatePickerComponent: FC<IDatePickerProps> = ({
-  pickedTime,
-  minDate,
-  maxDate,
-  placeholderText,
-  onChange,
-}) => {
+const DatePickerComponent: FC<IDatePickerProps> = ({ pickedTime, minDate, maxDate, placeholderText, onChange }) => {
   const currentTime = new Date();
   const selectedTime = pickedTime ? new Date(pickedTime) : null;
   const years = range(currentTime.getFullYear(), 2100, 1);
@@ -51,24 +45,27 @@ const DatePickerComponent: FC<IDatePickerProps> = ({
           increaseMonth,
           prevMonthButtonDisabled,
           nextMonthButtonDisabled,
+        }: {
+          date: Date;
+          monthDate: Date;
+          changeYear: (year: number) => void;
+          changeMonth: (month: number) => void;
+          decreaseMonth: () => void;
+          increaseMonth: () => void;
+          prevMonthButtonDisabled: boolean;
+          nextMonthButtonDisabled: boolean;
         }) => (
           <div className="custom_monthyear">
-            <button
-              onClick={decreaseMonth}
-              disabled={prevMonthButtonDisabled}
-              className="prev-tab"
-            >
+            <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled} className="prev-tab">
               {IC_CARRET_RIGHT()}
             </button>
             <div className="select_monthyear">
               <select
                 className="select_month"
                 value={months[monthDate.getMonth()]}
-                onChange={({ target: { value } }) =>
-                  changeMonth(months.indexOf(value))
-                }
+                onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}
               >
-                {months.map((option) => (
+                {months.map(option => (
                   <option key={option} value={option}>
                     {option}
                   </option>
@@ -79,18 +76,14 @@ const DatePickerComponent: FC<IDatePickerProps> = ({
                 value={monthDate.getFullYear()}
                 onChange={({ target: { value } }) => changeYear(+value)}
               >
-                {years.map((option) => (
+                {years.map(option => (
                   <option key={option} value={option}>
                     {option}
                   </option>
                 ))}
               </select>
             </div>
-            <button
-              onClick={increaseMonth}
-              disabled={nextMonthButtonDisabled}
-              className="next-tab"
-            >
+            <button onClick={increaseMonth} disabled={nextMonthButtonDisabled} className="next-tab">
               {IC_CARRET_RIGHT()}
             </button>
           </div>
@@ -98,20 +91,8 @@ const DatePickerComponent: FC<IDatePickerProps> = ({
         onChange={(date: Date) => {
           onChange(date);
         }}
-        minDate={
-          minDate
-            ? typeof minDate === "number"
-              ? new Date(minDate)
-              : minDate
-            : undefined
-        }
-        maxDate={
-          maxDate
-            ? typeof minDate === "number"
-              ? new Date(minDate)
-              : minDate
-            : undefined
-        }
+        minDate={minDate ? (typeof minDate === 'number' ? new Date(minDate) : minDate) : undefined}
+        maxDate={maxDate ? (typeof minDate === 'number' ? new Date(minDate) : minDate) : undefined}
         placeholderText={placeholderText}
         dateFormat="MM/d/yyyy"
       />

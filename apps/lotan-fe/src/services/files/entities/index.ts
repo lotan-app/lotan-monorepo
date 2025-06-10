@@ -27,7 +27,9 @@ export interface IUploadData {
   progress: number;
   status: STATUS_FILE_UPLOAD;
   file: File;
-  controller: AbortController;
+  fileBase?: any;
+  controller?: AbortController;
+  isResume?: boolean;
 }
 
 export interface IFileItemData {
@@ -37,7 +39,15 @@ export interface IFileItemData {
   size: number;
   updateAt: string;
   createAt?: string;
+  jsonUrl?: string;
+  fileSystem?: any;
   _id: string;
+}
+
+export interface IDownloadData extends IFileItemData {
+  progress: number;
+  status: STATUS_FILE_UPLOAD;
+  isResume?: boolean;
 }
 
 export interface IPaginationData {
@@ -51,4 +61,5 @@ export interface IFileDataState {
   listFile: IFileItemData[];
   pagination: IPaginationData;
   newUpload: string[];
+  downloadData: IDownloadData[];
 }

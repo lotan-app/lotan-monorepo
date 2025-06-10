@@ -1,4 +1,4 @@
-import { RootState } from "@App/rootStores";
+import { RootState } from '@App/rootStores';
 
 export const selectorUploadData = (state: RootState) => {
   return state.fileData.uploadData;
@@ -14,4 +14,8 @@ export const selectorPagination = (state: RootState) => {
 
 export const selectorNewUpload = (state: RootState) => {
   return state.fileData.newUpload;
+};
+
+export const selectorDownloadData = (state: RootState) => {
+  return state.fileData.downloadData;
 };

@@ -1,13 +1,14 @@
-import React, { FC, useEffect } from "react";
-import styles from "@View/files/assets/upload-file.module.scss";
-import Text from "@App/view/layout/components/Text";
-import UploadFileItem from "./UploadFileItem";
-import { useSelector } from "react-redux";
-import { selectorUploadData } from "@App/services/files/fileSelector";
-import { STATUS_FILE_UPLOAD, VIEW_FILE } from "@App/config/constants";
-import { useAppDispatch } from "@App/rootStores";
-import { setShowMinify } from "@App/services/setting/settingService";
-import { styleCombine } from "@App/common/helper";
+import React, { FC, useEffect } from 'react';
+import styles from '@View/files/assets/upload-file.module.scss';
+import Text from '@App/view/layout/components/Text';
+import UploadFileItem from './UploadFileItem';
+import { useSelector } from 'react-redux';
+import { selectorDownloadData, selectorUploadData } from '@App/services/files/fileSelector';
+import { STATUS_FILE_UPLOAD, VIEW_FILE } from '@App/config/constants';
+import { useAppDispatch } from '@App/rootStores';
+import { setShowMinify } from '@App/services/setting/settingService';
+import { styleCombine } from '@App/common/helper';
+import DownloadFileItem from './DownloadFilleItem';
 
 interface IUploadFileProps {
   account: string;
@@ -16,10 +17,10 @@ interface IUploadFileProps {
 
 const UploadFile: FC<IUploadFileProps> = ({ account, changeView }) => {
   const uploadData = useSelector(selectorUploadData);
+  const downloadData = useSelector(selectorDownloadData);
   const dispatch = useAppDispatch();
-  const uploadFilter = uploadData.filter(
-    (item) => item.status !== STATUS_FILE_UPLOAD.FINISH
-  );
+  const uploadFilter = uploadData.filter(item => item.status !== STATUS_FILE_UPLOAD.FINISH);
+  const downloadFilter = downloadData.filter(item => item.status !== STATUS_FILE_UPLOAD.FINISH);
 
   useEffect(() => {
     dispatch(setShowMinify(false));
@@ -29,10 +30,10 @@ const UploadFile: FC<IUploadFileProps> = ({ account, changeView }) => {
   }, []);
 
   useEffect(() => {
-    if (uploadFilter.length === 0) {
+    if (uploadFilter.length === 0 && downloadFilter.length === 0) {
       changeView(VIEW_FILE.MANAGE);
     }
-  }, [uploadFilter]);
+  }, [uploadFilter, downloadFilter]);
 
   return (
     <div className={styleCombine(styles.upload_file)}>
@@ -40,14 +41,17 @@ const UploadFile: FC<IUploadFileProps> = ({ account, changeView }) => {
         Please DO NOT close your browser or close this modal
       </Text>
       <div className={styles.list_upload}>
-        {uploadFilter.length === 0 ? (
+        {uploadFilter.length === 0 && downloadFilter.length === 0 ? (
           <Text color="neutral-n10" className={styles.empty}>
-            No Upload File
+            No File
           </Text>
         ) : (
           <>
             {uploadFilter.map((item, index) => {
               return <UploadFileItem key={index} {...item} />;
+            })}
+            {downloadFilter.map((item, index) => {
+              return <DownloadFileItem key={index} item={item} />;
             })}
           </>
         )}

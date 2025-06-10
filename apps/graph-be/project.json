@@ -1,0 +1,40 @@
+{
+  "name": "graph-be",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/graph-be/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project graph-be --web",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/graph-be",
+        "format": ["cjs"],
+        "bundle": true,
+        "main": "apps/graph-be/src/main.ts",
+        "tsConfig": "apps/graph-be/tsconfig.app.json",
+        "assets": ["apps/graph-be/src/assets"],
+        "thirdParty": true,
+        "sourcemap": true,
+        "esbuildConfig": "apps/graph-be/esbuild.config.ts",
+
+        "external": ["@koa/cors"]
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "graph-be:build"
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/graph-be/Dockerfile . -t graph-be"
+    }
+  }
+}

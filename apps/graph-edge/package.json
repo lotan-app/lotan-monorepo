@@ -1,0 +1,24 @@
+{
+  "name": "@lotan/graph-edge",
+  "version": "0.0.1",
+  "dependencies": {
+    "dotenv": "16.4.7",
+    "lodash": "4.17.21",
+    "axios": "1.7.9",
+    "js-yaml": "4.1.0",
+    "@mysten/sui": "^1.17.0",
+    "type-graphql": "^2.0.0-rc.2",
+    "@apollo/server": "^4.11.2",
+    "@prisma/client": "^5.18.0",
+    "reflect-metadata": "^0.2.2",
+    "@lotan/sdk": "0.0.1",
+    "@lotan/sui-checkpoint-reader": "0.0.0",
+    "body-parser": "1.20.3",
+    "cors": "2.8.5",
+    "express": "~4.18.1",
+    "prisma": "^5.18.0",
+    "node-cron": "^3.0.3",
+    "typedi": "^0.10.0"
+  },
+  "private": true
+}

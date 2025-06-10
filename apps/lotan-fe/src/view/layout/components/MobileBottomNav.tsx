@@ -1,46 +1,43 @@
-import React, { memo, useCallback, useMemo, useRef, useState } from "react";
-import { NAV_LIST_MOBILE } from "@App/config/constants";
-import { INavList } from "@App/common/type";
-import { disableScroll, enableScroll } from "@App/common/helper";
-import Text from "./Text";
-import styled, { css } from "styled-components";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Lodash from "@App/common/services/lodash";
-import { useOnClickOutside } from "@App/common/hooks/useOnClickOutside";
-import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
-import { selectorAccountLogin } from "@App/services/auth/authSelector";
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import { NAV_LIST_MOBILE } from '@App/config/constants';
+import { INavList } from '@App/common/type';
+import { disableScroll, enableScroll } from '@App/common/helper';
+import Text from './Text';
+import styled, { css } from 'styled-components';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Lodash from '@App/common/services/lodash';
+import { useOnClickOutside } from '@App/common/hooks/useOnClickOutside';
+import { motion } from 'framer-motion';
 
 const MobileBottomNav = () => {
   const router = useRouter();
   const containerRef = useRef();
-  const [showDrop, setShowDrop] = useState("");
-  const account = useSelector(selectorAccountLogin);
+  const [showDrop, setShowDrop] = useState('');
   const toggleDrop = (id?: string) => {
     if (id === undefined || (id && showDrop !== id)) {
       disableScroll();
     } else {
       enableScroll();
     }
-    setShowDrop(id ? (showDrop === id ? "" : id) : "");
+    setShowDrop(id ? (showDrop === id ? '' : id) : '');
   };
   const defaultSelected = useMemo(() => {
-    let path = router.pathname.split("/").slice(1);
+    let path = router.pathname.split('/').slice(1);
     if (path.length === 1 && !path[0]) {
-      path = ["/"];
+      path = ['/'];
     }
     return path;
   }, [router.pathname]);
   const getSelectedMenu = useCallback(
     (menu: string) => {
-      return defaultSelected[0] === menu ? "active" : "";
+      return defaultSelected[0] === menu ? 'active' : '';
     },
-    [defaultSelected]
+    [defaultSelected],
   );
 
   const routing = async (event: any) => {
-    let url = event.currentTarget.href;
+    const url = event.currentTarget.href;
     event.preventDefault();
     toggleDrop();
     const currentPath = router.pathname;
@@ -53,7 +50,7 @@ const MobileBottomNav = () => {
           query: query,
         },
         undefined,
-        { shallow: true, scroll: false }
+        { shallow: true, scroll: false },
       );
       return;
     }
@@ -65,8 +62,8 @@ const MobileBottomNav = () => {
   useOnClickOutside(
     containerRef,
     useCallback(() => {
-      toggleDrop("");
-    }, [])
+      toggleDrop('');
+    }, []),
   );
   const variants = {
     visible: { translateY: 0, opacity: 1 },
@@ -77,34 +74,24 @@ const MobileBottomNav = () => {
     hidden: { opacity: 0 },
   };
   return (
-    <MobileBottomNavStyle
-      $size={NAV_LIST_MOBILE.length}
-      ref={containerRef}
-      id="mobile_bottom_nav"
-    >
+    <MobileBottomNavStyle $size={NAV_LIST_MOBILE.length} ref={containerRef} id="mobile_bottom_nav">
       <motion.div
-        animate={showDrop.length > 0 ? "visible" : "hidden"}
+        animate={showDrop.length > 0 ? 'visible' : 'hidden'}
         variants={backdrop_variants}
-        className={`overlay ${showDrop.length > 0 ? "active" : ""}`}
-        onClick={() => toggleDrop("")}
+        className={`overlay ${showDrop.length > 0 ? 'active' : ''}`}
+        onClick={() => toggleDrop('')}
       />
       <div className="mbns">
         {NAV_LIST_MOBILE.map((item: INavList, index: number) => {
           if (!item.nested) {
             return (
               <div key={`${item.title}_${index}`} className="mbnsn_item">
-                <Link
-                  href={item.link}
-                  onClick={routing}
-                  className={`mbnsni ${getSelectedMenu(item.path)}`}
-                >
+                <Link href={item.link} onClick={routing} className={`mbnsni ${getSelectedMenu(item.path)}`}>
                   {(item.anim || item.icon) && (
-                    <div className="mbnsn_icon">
-                      {item.anim ? <img src={item.anim} /> : item.icon}
-                    </div>
+                    <div className="mbnsn_icon">{item.anim ? <img src={item.anim} /> : item.icon}</div>
                   )}
                   <div className="mbnsn_content">
-                    <Text size={14} color={"neutral-n7"}>
+                    <Text size={14} color={'neutral-n7'}>
                       {item.title}
                     </Text>
                   </div>
@@ -115,41 +102,29 @@ const MobileBottomNav = () => {
             return (
               <div
                 key={`${item.title}_${index}`}
-                className={`mbnsn_item nested_nav ${
-                  showDrop === `${item.title}_${index}` ? "show" : ""
-                }`}
+                className={`mbnsn_item nested_nav ${showDrop === `${item.title}_${index}` ? 'show' : ''}`}
               >
                 <div
                   className={`mbnsni ${getSelectedMenu(item.path)} ${
-                    item.nested.findIndex(
-                      (item: INavList) => item.path === defaultSelected[0]
-                    ) > -1
-                      ? "active"
-                      : ""
+                    item.nested.findIndex((item: INavList) => item.path === defaultSelected[0]) > -1 ? 'active' : ''
                   }`}
                   onClick={() => {
                     toggleDrop(`${item.title}_${index}`);
                   }}
                 >
                   {(item.anim || item.icon) && (
-                    <div className="icon">
-                      {item.anim ? <img src={item.anim} /> : item.icon}
-                    </div>
+                    <div className="icon">{item.anim ? <img src={item.anim} /> : item.icon}</div>
                   )}
                   <div className="mbnsn_content">
-                    <Text size={14} color={"neutral-n7"}>
+                    <Text size={14} color={'neutral-n7'}>
                       {item.title}
                     </Text>
                   </div>
                 </div>
                 <motion.div
-                  animate={
-                    showDrop === `${item.title}_${index}` ? "visible" : "hidden"
-                  }
+                  animate={showDrop === `${item.title}_${index}` ? 'visible' : 'hidden'}
                   variants={variants}
-                  className={`nested_drop ${
-                    showDrop === `${item.title}_${index}` ? "active" : ""
-                  }`}
+                  className={`nested_drop ${showDrop === `${item.title}_${index}` ? 'active' : ''}`}
                   id={`${item.title}_${index}`}
                 >
                   {item.nested.map((nestedItem: INavList, idx) => (
@@ -161,28 +136,20 @@ const MobileBottomNav = () => {
                         return (
                           <Link
                             key={`${navItem.title}_${navIdx}`}
-                            href={navItem.link ?? "/"}
+                            href={navItem.link ?? '/'}
                             onClick={routing}
-                            className={`nested_item ${getSelectedMenu(
-                              nestedItem.path
-                            )}`}
+                            className={`nested_item ${getSelectedMenu(nestedItem.path)}`}
                           >
                             {(navItem.icon || navItem.anim) && (
                               <div className="nested_icon">
-                                {navItem.anim ? (
-                                  <img src={navItem.anim} />
-                                ) : (
-                                  navItem.icon
-                                )}
+                                {navItem.anim ? <img src={navItem.anim} /> : navItem.icon}
                               </div>
                             )}
                             <div className="nested_content">
-                              <Text size={14} color={"neutral-n6"}>
+                              <Text size={14} color={'neutral-n6'}>
                                 {navItem.title}
                                 {navItem.coming && <span>Coming soon</span>}
-                                {navItem.smallText && (
-                                  <span> {navItem.smallText}</span>
-                                )}
+                                {navItem.smallText && <span> {navItem.smallText}</span>}
                               </Text>
                             </div>
                           </Link>
@@ -212,11 +179,9 @@ const MobileBottomNav = () => {
 };
 export default MobileBottomNav;
 interface TMBNStyle {
-  size: number;
-}
-const MobileBottomNavStyle = memo(styled.div<{
   $size: number;
-}>`
+}
+const MobileBottomNavStyle = memo(styled.div<TMBNStyle>`
   background: var(--body-bg);
   position: fixed;
   bottom: 0;
@@ -228,7 +193,7 @@ const MobileBottomNavStyle = memo(styled.div<{
     display: none;
   }
   .overlay {
-    content: "";
+    content: '';
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -251,7 +216,7 @@ const MobileBottomNavStyle = memo(styled.div<{
     background: var(--body-bg);
     position: relative;
     z-index: 1;
-    ${({ $size }) => css`
+    ${({ $size }: TMBNStyle) => css`
       grid: 1fr / repeat(${$size}, 1fr);
     `}
     .mbnsn_item {

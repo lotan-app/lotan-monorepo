@@ -4,7 +4,7 @@ import Text from '@App/view/layout/components/Text';
 import uploadFileAnim from '@Common/animations/uploadFileAnim.json';
 import Lottie from 'lottie-react';
 import { useAppDispatch } from '@App/rootStores';
-import { changeUploadData, uploadFile } from '@App/services/files/fileService';
+import { changeUploadData, uploadNewFile } from '@App/services/files/fileService';
 import { STATUS_FILE_UPLOAD, VIEW_FILE } from '@App/config/constants';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
@@ -22,9 +22,9 @@ const AddFile: FC<IAddFileProps> = ({ changeView }) => {
   const { callEvent } = useGoogleTag();
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (files) => {
+    onDrop: files => {
       const fileArr = Array.from(files);
-      const uploadData = fileArr.map((item) => {
+      const uploadData = fileArr.map(item => {
         return {
           id: `${item.name}_${item.size}_${uuidv4()}`,
           name: item.name,
@@ -32,12 +32,12 @@ const AddFile: FC<IAddFileProps> = ({ changeView }) => {
           progress: 0,
           status: STATUS_FILE_UPLOAD.PROCESS,
           file: item,
-          controller: new AbortController(),
         };
       });
       dispatch(changeUploadData(uploadData));
       changeView(VIEW_FILE.UPLOAD);
-      dispatch(uploadFile(uploadData, account));
+      // dispatch(uploadFile(uploadData, account));
+      dispatch(uploadNewFile(uploadData));
       callEvent('event', 'file_uploaded');
     },
   });
@@ -47,17 +47,11 @@ const AddFile: FC<IAddFileProps> = ({ changeView }) => {
       <div {...getRootProps({ className: styles.dropzone })}>
         <div className={styles.file_upload}>
           <Lottie animationData={uploadFileAnim} loop={true} />
-          <Text
-            size={18}
-            color="neutral-n10"
-            fontWeight={500}
-            className={styles.title}
-          >
+          <Text size={18} color="neutral-n10" fontWeight={500} className={styles.title}>
             Drop files here
           </Text>
           <Text color="neutral-n8" size={16} className={styles.description}>
-            Or <span>Choose a file</span> Max file size:{' '}
-            {account ? '50MB' : '10MB'}
+            Or <span>Choose a file</span> Max file size: {account ? '50MB' : '10MB'}
           </Text>
         </div>
         <input {...getInputProps()} />

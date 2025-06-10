@@ -1,0 +1,41 @@
+{
+  "name": "sui-checkpoint-reader",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/sui-checkpoint-reader/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "cache": true,
+      "inputs": ["{projectRoot}/src/**/*"],
+      "outputs": ["{workspaceRoot}/packages/sui-checkpoint-reader"],
+      "executor": "@monodon/rust:napi",
+      "options": {
+        "dist": "{workspaceRoot}/packages/sui-checkpoint-reader/dist",
+        "jsFile": "index.js",
+        "release": true
+      }
+    },
+    "test": {
+      "cache": true,
+      "executor": "@monodon/rust:test",
+      "outputs": ["{options.target-dir}"],
+      "options": {
+        "target-dir": "dist/target/sui-checkpoint-reader"
+      },
+      "configurations": {
+        "production": {
+          "release": true
+        }
+      }
+    },
+    "lint": {
+      "cache": true,
+      "executor": "@monodon/rust:lint",
+      "outputs": ["{options.target-dir}"],
+      "options": {
+        "target-dir": "dist/target/sui-checkpoint-reader"
+      }
+    }
+  }
+}

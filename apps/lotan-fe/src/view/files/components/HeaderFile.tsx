@@ -18,8 +18,7 @@ const HeaderFile: FC<IHeaderFileProps> = ({ view, account, changeView }) => {
   return (
     <div className={styles.header_file}>
       <div className={styles.left}>
-        {(view === VIEW_FILE.UPLOAD ||
-          (view === VIEW_FILE.ADD && listFile.length > 0)) && (
+        {(view === VIEW_FILE.UPLOAD || (view === VIEW_FILE.ADD && listFile.length > 0)) && (
           <div
             className={styles.icon}
             onClick={() => {
@@ -32,7 +31,7 @@ const HeaderFile: FC<IHeaderFileProps> = ({ view, account, changeView }) => {
         {view === VIEW_FILE.UPLOAD ? (
           <>
             <Text color="neutral-n9" size={18} fontWeight={500}>
-              Upload
+              Progress File
             </Text>
           </>
         ) : (

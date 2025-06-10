@@ -1,21 +1,17 @@
-import React, { FC } from "react";
-import styles from "@View/files/assets/file-filter.module.scss";
-import Text from "@App/view/layout/components/Text";
-import SearchInput from "@App/view/layout/components/SearchInput";
-import DatePickerComponents from "@App/view/layout/components/DatePicker";
-import { IC_CALENDAR, IC_CLOSE, IC_RANGE_DATE } from "@App/common/icons";
-import CustomButton from "@App/view/layout/components/CustomButton";
-import { ITimeRangeFile } from "@App/services/files/entities";
-import { useAppDispatch } from "@App/rootStores";
-import { useSelector } from "react-redux";
-import { selectorPagination } from "@App/services/files/fileSelector";
-import { selectorAccountLogin } from "@App/services/auth/authSelector";
-import useDelayFetch from "@App/common/hooks/useDelayFetch";
-import {
-  getUserFile,
-  setFilterLocalFile,
-  setLocalFile,
-} from "@App/services/files/fileService";
+import React, { FC } from 'react';
+import styles from '@View/files/assets/file-filter.module.scss';
+import Text from '@App/view/layout/components/Text';
+import SearchInput from '@App/view/layout/components/SearchInput';
+import DatePickerComponents from '@App/view/layout/components/DatePicker';
+import { IC_CALENDAR, IC_CLOSE, IC_RANGE_DATE } from '@App/common/icons';
+import CustomButton from '@App/view/layout/components/CustomButton';
+import { ITimeRangeFile } from '@App/services/files/entities';
+import { useAppDispatch } from '@App/rootStores';
+import { useSelector } from 'react-redux';
+import { selectorPagination } from '@App/services/files/fileSelector';
+import { selectorAccountLogin } from '@App/services/auth/authSelector';
+import useDelayFetch from '@App/common/hooks/useDelayFetch';
+import { getUserFile, setFilterLocalFile } from '@App/services/files/fileService';
 
 interface IFileFilterProps {
   txtSearch: string;
@@ -34,7 +30,6 @@ const FileFilter: FC<IFileFilterProps> = ({
   onChangeEndTime,
   resetInput,
 }) => {
-  const currentDate = new Date();
   const dispatch = useAppDispatch();
   const pagination = useSelector(selectorPagination);
   const { size } = pagination;
@@ -53,7 +48,7 @@ const FileFilter: FC<IFileFilterProps> = ({
         startTime: start,
         endTime: end,
         account,
-      })
+      }),
     );
   };
 
@@ -63,7 +58,7 @@ const FileFilter: FC<IFileFilterProps> = ({
     <div className={styles.file_filter}>
       <SearchInput
         value={txtSearch}
-        onChange={(value) => {
+        onChange={value => {
           onChangeSearch(value);
           getDataDelay(value, timeRange.startTime, timeRange.endTime);
         }}
@@ -97,10 +92,10 @@ const FileFilter: FC<IFileFilterProps> = ({
             className={styles.clear}
             onClick={() => {
               resetInput();
-              getDataDelay("", null, null);
+              getDataDelay('', null, null);
             }}
           >
-            <div className={styles.icon}>{IC_CLOSE("var(--primary)")}</div>
+            <div className={styles.icon}>{IC_CLOSE('var(--primary)')}</div>
             <Text color="primary">Clear</Text>
           </div>
         ) : (

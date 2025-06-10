@@ -1,0 +1,40 @@
+{
+  "name": "graph-agent",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/graph-agent/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project graph-agent --web",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/graph-agent",
+        "format": ["cjs"],
+        "bundle": true,
+        "main": "apps/graph-agent/src/main.ts",
+        "tsConfig": "apps/graph-agent/tsconfig.app.json",
+        "assets": ["apps/graph-agent/src/assets"],
+        "thirdParty": true,
+        "sourcemap": true,
+        "esbuildConfig": "apps/graph-agent/esbuild.config.ts",
+
+        "external": ["@koa/cors"]
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "graph-agent:build"
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/graph-agent/Dockerfile . -t graph-agent"
+    }
+  }
+}

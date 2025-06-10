@@ -1,0 +1,29 @@
+{
+  "name": "@lotan/sdk",
+  "version": "0.0.1",
+  "dependencies": {
+    "@nx/rollup": "20.3.0",
+    "archiver": "^7.0.1",
+    "crypto-js": "^4.2.0",
+    "p-limit": "3.1.0",
+    "unzipper": "^0.12.3"
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "main": "./dist/index.cjs.js",
+  "types": "./dist/index.cjs.d.ts",
+  "module": "./dist/index.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.cjs.d.ts",
+      "import": "./dist/index.esm.js",
+      "default": "./dist/index.cjs.js"
+    }
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

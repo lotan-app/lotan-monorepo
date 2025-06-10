@@ -9,24 +9,21 @@ import CustomButton from '@App/view/layout/components/CustomButton';
 import { IC_DELETE, IC_DOWNLOAD } from '@App/common/icons';
 import { ConfirmDelete } from './ConfirmDelete';
 import {
+  changeDownloadData,
   changePage,
   changeSize,
-  deleteFile,
+  deleteListFile,
   deleteNewUpload,
+  downloadFile,
   getUserFile,
   setDeleteLocalFile,
 } from '@App/services/files/fileService';
 import { useAppDispatch } from '@App/rootStores';
 import { useSelector } from 'react-redux';
-import {
-  selectorListFile,
-  selectorNewUpload,
-  selectorPagination,
-} from '@App/services/files/fileSelector';
-import { ROW_PER_PAGE, WALRUS_URL } from '@App/config/constants';
+import { selectorListFile, selectorNewUpload, selectorPagination } from '@App/services/files/fileSelector';
+import { ROW_PER_PAGE, STATUS_FILE_UPLOAD } from '@App/config/constants';
 import BarLoading from '@App/view/layout/components/Loading';
 import { IFileItemData, ITimeRangeFile } from '@App/services/files/entities';
-import axios from 'axios';
 import { selectorAccountLogin } from '@App/services/auth/authSelector';
 import useDelayFetch from '@App/common/hooks/useDelayFetch';
 import { useWidthScreen } from '@App/common/hooks/useWidthScreen';
@@ -42,7 +39,7 @@ interface IFileTableProps {
 const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [deleteOption, setDeleteOption] = useState<IFileItemData>(null);
-  const [fetchData, setFetchData] = useState<boolean>(false);
+  const [fetchData] = useState<boolean>(false);
   const [checkedAll, setCheckedAll] = useState<boolean>(false);
   const [checkedItems, setCheckedItems] = useState<IFileItemData[]>([]);
   const [showConfirm, setShowConfirm] = useState<boolean>(false);
@@ -66,7 +63,7 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
           txtSearch,
           startTime: timeRange.startTime,
           endTime: timeRange.endTime,
-        })
+        }),
       );
     } catch (err) {
       console.log(err);
@@ -113,32 +110,30 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
     }
   };
 
-  const downloadFile = async (blobID: string, fileName: string) => {
-    const response = await axios({
-      url: `${WALRUS_URL}/v1/${blobID}`,
-      method: 'GET',
-      responseType: 'blob',
-    });
-    const urlBlob = URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement('a');
-    link.href = urlBlob;
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
-    link.parentNode.removeChild(link);
-    URL.revokeObjectURL(urlBlob);
-  };
+  // const downloadFile = async (blobID: string, fileName: string) => {
+  //   const response = await axios({
+  //     url: `${WALRUS_URL}/v1/${blobID}`,
+  //     method: 'GET',
+  //     responseType: 'blob',
+  //   });
+  //   const urlBlob = URL.createObjectURL(new Blob([response.data]));
+  //   const link = document.createElement('a');
+  //   link.href = urlBlob;
+  //   link.setAttribute('download', fileName);
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   link.parentNode.removeChild(link);
+  //   URL.revokeObjectURL(urlBlob);
+  // };
 
   const handleDelete = async () => {
     setIsLoading(true);
     try {
-      const ids = deleteOption
-        ? [deleteOption._id]
-        : checkedItems.map((item) => item._id);
+      const ids = deleteOption ? [deleteOption._id] : checkedItems.map(item => item._id);
       if (!account) {
         dispatch(setDeleteLocalFile(ids));
       } else {
-        await deleteFile(ids, account);
+        await deleteListFile(ids, account);
         getDataDelay(size, page);
       }
       setCheckedAll(false);
@@ -151,18 +146,36 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
     setIsLoading(false);
   };
 
+  // const handleDownload = async (fileInput?: IFileItemData) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const downloadPromises = (fileInput ? [fileInput] : checkedItems).map(
+  //       (file) => {
+  //         return downloadFile(file.blobID, file.fileName);
+  //       }
+  //     );
+  //     await Promise.all(downloadPromises);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   setIsLoading(false);
+  // };
+
   const handleDownload = async (fileInput?: IFileItemData) => {
     setIsLoading(true);
-    try {
-      const downloadPromises = (fileInput ? [fileInput] : checkedItems).map(
-        (file) => {
-          return downloadFile(file.blobID, file.fileName);
-        }
-      );
-      await Promise.all(downloadPromises);
-    } catch (err) {
-      console.log(err);
-    }
+    const data = fileInput ? [fileInput] : checkedItems;
+    dispatch(
+      changeDownloadData(
+        [...data].map(item => {
+          return {
+            ...item,
+            progress: 0,
+            status: STATUS_FILE_UPLOAD.PROCESS,
+          };
+        }),
+      ),
+    );
+    await dispatch(downloadFile(fileInput ? [fileInput] : checkedItems, true));
     setIsLoading(false);
   };
 
@@ -172,16 +185,16 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
         deleteOption.fileName,
         '...',
         width <= 767 ? 6 : 8,
-        width <= 767 ? 6 : 8
+        width <= 767 ? 6 : 8,
       )} File`;
     }
-    if (checkedItems.length === 0) return;
+    if (checkedItems.length === 0) return '';
     if (checkedItems.length === 1) {
       return `Delete ${truncateMiddleText(
         checkedItems[0].fileName,
         '...',
         width <= 767 ? 6 : 8,
-        width <= 767 ? 6 : 8
+        width <= 767 ? 6 : 8,
       )} File`;
     }
     return `Delete ${checkedItems.length} Files`;
@@ -197,8 +210,7 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
           <>
             <div className={styles.selected_file}>
               <Text color="neutral-n7">
-                {checkedItems.length}{' '}
-                {`File${checkedItems.length > 1 ? 's' : ''}`} Selected
+                {checkedItems.length} {`File${checkedItems.length > 1 ? 's' : ''}`} Selected
               </Text>
               <div className={styles.options}>
                 <CustomButton
@@ -218,9 +230,7 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
                     setShowConfirm(true);
                   }}
                 >
-                  <div className={styles.icon}>
-                    {IC_DELETE('var(--btn-color)')}
-                  </div>
+                  <div className={styles.icon}>{IC_DELETE('var(--btn-color)')}</div>
                   <Text color="btn-color" className={styles.title}>
                     Delete
                   </Text>
@@ -265,27 +275,47 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
             </Text>
           ) : (
             <>
-              {(!account
-                ? listFile.slice((page - 1) * size, (page - 1) * size + size)
-                : listFile
-              ).map((file, index) => {
-                const isNewUpdate = newUpload.includes(file._id);
-                if (width <= 991)
+              {(!account ? listFile.slice((page - 1) * size, (page - 1) * size + size) : listFile).map(
+                (file, index) => {
+                  const isNewUpdate = newUpload.includes(file._id);
+                  if (width <= 991)
+                    return (
+                      <FileMobileItem
+                        key={index}
+                        {...file}
+                        isChecked={!!checkedItems.find(item => item._id === file._id)}
+                        onChecked={isChecked => {
+                          const list = [...checkedItems];
+                          if (isChecked) {
+                            list.push(file);
+                          } else {
+                            const idx = list.findIndex(item => item._id === file._id);
+                            idx > -1 && list.splice(idx, 1);
+                          }
+                          setCheckedItems(list);
+                        }}
+                        isLoading={isLoading}
+                        isNewUpdate={isNewUpdate}
+                        handleDelete={() => {
+                          setDeleteOption(file);
+                          setShowConfirm(true);
+                        }}
+                        handleDownload={() => {
+                          handleDownload(file);
+                        }}
+                      />
+                    );
                   return (
-                    <FileMobileItem
+                    <FileItem
                       key={index}
                       {...file}
-                      isChecked={
-                        !!checkedItems.find((item) => item._id === file._id)
-                      }
-                      onChecked={(isChecked) => {
+                      isChecked={!!checkedItems.find(item => item._id === file._id)}
+                      onChecked={isChecked => {
                         const list = [...checkedItems];
                         if (isChecked) {
                           list.push(file);
                         } else {
-                          const idx = list.findIndex(
-                            (item) => item._id === file._id
-                          );
+                          const idx = list.findIndex(item => item._id === file._id);
                           idx > -1 && list.splice(idx, 1);
                         }
                         setCheckedItems(list);
@@ -301,37 +331,8 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
                       }}
                     />
                   );
-                return (
-                  <FileItem
-                    key={index}
-                    {...file}
-                    isChecked={
-                      !!checkedItems.find((item) => item._id === file._id)
-                    }
-                    onChecked={(isChecked) => {
-                      const list = [...checkedItems];
-                      if (isChecked) {
-                        list.push(file);
-                      } else {
-                        const idx = list.findIndex(
-                          (item) => item._id === file._id
-                        );
-                        idx > -1 && list.splice(idx, 1);
-                      }
-                      setCheckedItems(list);
-                    }}
-                    isLoading={isLoading}
-                    isNewUpdate={isNewUpdate}
-                    handleDelete={() => {
-                      setDeleteOption(file);
-                      setShowConfirm(true);
-                    }}
-                    handleDownload={() => {
-                      handleDownload(file);
-                    }}
-                  />
-                );
-              })}
+                },
+              )}
             </>
           )}
         </>
@@ -341,7 +342,7 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
           <Text color="neutral-n6">Row per page:</Text>
           <select
             value={size}
-            onChange={(event) => {
+            onChange={event => {
               const newSize = Number(event.target.value);
               if (newSize === size) return;
               resetChecked();
@@ -360,11 +361,7 @@ const FileTable: FC<IFileTableProps> = ({ txtSearch, timeRange }) => {
           </select>
         </div>
         {total > 0 && (
-          <Pagination
-            currentPage={page}
-            maxPage={maxPage}
-            handleChangePagination={handleChangePagination}
-          />
+          <Pagination currentPage={page} maxPage={maxPage} handleChangePagination={handleChangePagination} />
         )}
       </div>
       <ConfirmDelete

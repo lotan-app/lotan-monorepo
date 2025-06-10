@@ -1,0 +1,56 @@
+{
+  "name": "graph-edge",
+  "projectType": "application",
+  "sourceRoot": "apps/graph-edge/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/graph-edge",
+        "format": ["cjs"],
+        "bundle": true,
+        "main": "apps/graph-edge/src/main.ts",
+        "tsConfig": "apps/graph-edge/tsconfig.app.json",
+        "assets": ["apps/graph-edge/src/assets"],
+        "thirdParty": true,
+        "sourcemap": true,
+        "esbuildOptions": {
+          "loader": {
+            ".node": "copy"
+          },
+          "outExtension": {
+            ".js": ".js"
+          }
+        },
+        "external": [
+          "@aws-sdk/client-s3",
+          "@generated/type-graphql",
+          "graphql",
+          "graphql-scalars",
+          "type-graphql",
+          "typegraphql-prisma"
+        ]
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "graph-edge:build",
+        "runBuildTargetDependencies": true
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    },
+    "docker-build": {
+      "dependsOn": ["build"],
+      "command": "docker build -f apps/graph-edge/Dockerfile . -t graph-edge"
+    }
+  }
+}

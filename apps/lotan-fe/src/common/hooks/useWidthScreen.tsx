@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const useWidthScreen = () => {
   function getSize() {
@@ -13,14 +13,18 @@ const useWidthScreen = () => {
   }
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       handleResize();
 
-      window.addEventListener("resize", handleResize);
+      window.addEventListener('resize', handleResize);
       return () => {
-        window.removeEventListener("resize", handleResize);
+        window.removeEventListener('resize', handleResize);
       };
     }
+
+    return () => {
+      //
+    };
   }, []);
   return windowSize;
 };

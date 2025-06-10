@@ -3,7 +3,7 @@ import styles from '@View/layout/assets/upload-minify.module.scss';
 import Text from '@App/view/layout/components/Text';
 import UploadFileItem from '@View/files/components/UploadFileItem';
 import { useSelector } from 'react-redux';
-import { selectorUploadData } from '@App/services/files/fileSelector';
+import { selectorDownloadData, selectorUploadData } from '@App/services/files/fileSelector';
 import { STATUS_FILE_UPLOAD, VIEW_FILE } from '@App/config/constants';
 import { IC_RESIZE } from '@App/common/icons';
 import { useAppDispatch } from '@App/rootStores';
@@ -13,22 +13,23 @@ import eventEmitter from '@App/common/eventEmitter';
 import { motion } from 'framer-motion';
 import { selectorShowMinify } from '@App/services/setting/settingSelector';
 import { useWidthScreen } from '@App/common/hooks/useWidthScreen';
+import DownloadFileItem from '@App/view/files/components/DownloadFilleItem';
 
 const UploadMinify = () => {
   const uploadData = useSelector(selectorUploadData);
+  const downloadData = useSelector(selectorDownloadData);
   const showModify = useSelector(selectorShowMinify);
   const { width } = useWidthScreen();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const uploadFilter = uploadData.filter(
-    (item) => item.status !== STATUS_FILE_UPLOAD.FINISH
-  );
-
+  const uploadFilter = uploadData.filter(item => item.status !== STATUS_FILE_UPLOAD.FINISH);
+  const downloadFilter = downloadData.filter(item => item.status !== STATUS_FILE_UPLOAD.FINISH);
+  console.log(downloadData);
   useEffect(() => {
-    if (uploadFilter.length === 0) {
+    if (uploadFilter.length === 0 && downloadFilter.length === 0) {
       dispatch(setShowMinify(false));
     }
-  }, [uploadFilter]);
+  }, [uploadFilter, downloadFilter]);
 
   const variants = {
     visible: { translateY: 0, opacity: 1 },
@@ -36,18 +37,10 @@ const UploadMinify = () => {
   };
 
   return (
-    <motion.div
-      animate={showModify ? 'visible' : 'hidden'}
-      variants={variants}
-      className={styles.upload_minify}
-    >
+    <motion.div animate={showModify ? 'visible' : 'hidden'} variants={variants} className={styles.upload_minify}>
       <div className={styles.header}>
         <Text size={16} fontWeight={500} color="neutral-n9">
-          {width > 991
-            ? 'Upload File'
-            : `Upload ${uploadFilter.length} File${
-                uploadFilter.length > 1 ? 's' : ' '
-              }`}
+          {width > 991 ? 'Progress File' : `Progress ${uploadFilter.length} File${uploadFilter.length > 1 ? 's' : ' '}`}
         </Text>
         <div
           className={styles.icon}
@@ -69,7 +62,7 @@ const UploadMinify = () => {
       </div>
       {width > 991 && (
         <div className={styles.list_upload}>
-          {uploadFilter.length === 0 ? (
+          {uploadFilter.length === 0 && downloadFilter.length === 0 ? (
             <Text size={16} color="neutral-n10" className={styles.empty}>
               No File
             </Text>
@@ -77,6 +70,9 @@ const UploadMinify = () => {
             <>
               {uploadFilter.map((item, index) => {
                 return <UploadFileItem key={index} {...item} isMinify={true} />;
+              })}
+              {downloadFilter.map((item, index) => {
+                return <DownloadFileItem key={index} item={item} isMinify={true} />;
               })}
             </>
           )}
